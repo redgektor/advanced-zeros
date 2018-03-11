@@ -1,21 +1,26 @@
 module.exports = function getZerosCount(number, base) {
-var subBase = base, subNumber = number, result = 0;
-	for (var i = 2; i <= base; i++) {
-		if (subBase % i == 0) {
-			while (subBase % i == 0) {
-				subBase = (subBase - subBase%i)/i;
-			}
-			
-			subNumber = number;
-			result = 0;
-			while (subNumber/i > 0) {
-				result = result + ((subNumber - subNumber%i) / i);
-				subNumber = (subNumber - subNumber%i) / i;
-			}
-			if (subNumber > result) {
-				subNumber = result;
-			}
-		}
-	}
-	return Math.floor(result);
+var subBase = base, newBase = base, subNumber = number, result = number, doubledBase, num;
+
+  for (var i = 2; i <= base; i++) {
+    if (subBase % i == 0) {
+      doubledBase = 0;
+    while (subBase % i == 0) {
+      subBase = subBase/i;
+      doubledBase++;
+    }
+  
+      var prime = i;
+      var subResult = 0;
+      subNumber = number;
+      while (subNumber >= prime) {
+        subNumber = (subNumber - subNumber % prime)/prime;
+        subResult = subResult + subNumber;
+      }
+      subResult = Math.floor(subResult / doubledBase);
+      if (subResult < result) {
+        result = subResult;
+      }
+    }
+  }
+  return result;
 }
